@@ -1,8 +1,16 @@
+buildscript {
+	dependencies {
+		classpath("org.flywaydb:flyway-database-postgresql:10.15.0")
+	}
+}
+
 plugins {
 	id("org.springframework.boot") version "3.3.1"
 	id("io.spring.dependency-management") version "1.1.5"
 	kotlin("jvm") version "1.9.24"
 	kotlin("plugin.spring") version "1.9.24"
+
+	id("org.flywaydb.flyway") version "10.15.2"
 }
 
 group = "lab.pguma.spb-dev-kit"
@@ -22,7 +30,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.flywaydb:flyway-core")
-	implementation("org.flywaydb:flyway-database-postgresql")
+	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.15.0")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	runtimeOnly("org.postgresql:postgresql")
@@ -39,4 +47,10 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+flyway {
+	url = "jdbc:postgresql://localhost:5432/dev"
+	user = "postgres"
+	password = "password"
 }
