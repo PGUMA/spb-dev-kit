@@ -29,6 +29,7 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.flywaydb:flyway-core")
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.15.0")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -53,4 +54,5 @@ flyway {
 	url = "jdbc:postgresql://localhost:5432/dev"
 	user = "postgres"
 	password = "password"
+	cleanDisabled = false // flyway 9
 }

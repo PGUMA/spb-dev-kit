@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: spb-dev-kit
+  flyway:
+    url: ${FLYWAY_DATASOURCE_URL:jdbc:postgresql://localhost:5432/dev}
+    user: ${FLYWAY_USER:postgres}
+    password: ${FLYWAY_PASSWORD:password}
+    enabled: false
