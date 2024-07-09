@@ -8,3 +8,6 @@ spring:
     user: ${FLYWAY_USER:postgres}
     password: ${FLYWAY_PASSWORD:password}
     enabled: false
+  docker:
+    compose:
+      enabled: false
