@@ -11,3 +11,12 @@ spring:
   docker:
     compose:
       enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,beans,env,mappings,loggers
+  endpoint:
+    health:
+      show-details=always:
