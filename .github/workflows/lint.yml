@@ -17,6 +17,12 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+      - name: Set up java
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "corretto"
+          cache: "gradle"
       - name: Run Spotbugs Main
         run: ./gradlew spotbugsMain
       - name: Set up reviewdog
