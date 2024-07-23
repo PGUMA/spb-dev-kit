@@ -96,3 +96,19 @@ openApiGenerate {
         "useSpringBoot3" to "true"
     )
 }
+
+// https://github.com/spotbugs/spotbugs-gradle-plugin
+spotbugs {
+    ignoreFailures = false
+    reportsDir = layout.buildDirectory.dir("reports/spotbugs")
+}
+
+tasks.spotbugsMain {
+    reports.create("sarif") {
+        required = true
+    }
+    reports.create("html") {
+        required = true
+        setStylesheet("fancy-hist.xsl")
+    }
+}

@@ -17,4 +17,15 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - run: ./gradlew spotbugsMain
+      - name: Run Spotbugs Main
+        run: ./gradlew spotbugsMain
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: v0.20.1
+      - name: Run reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          cat ./build/reports/spotbugs/main.sarf
+          | reviewdog -f sarif -reporter=github-pr-check -name run-reviewdog -tee
