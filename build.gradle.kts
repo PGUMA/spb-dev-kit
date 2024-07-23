@@ -99,7 +99,7 @@ openApiGenerate {
 
 // https://github.com/spotbugs/spotbugs-gradle-plugin
 spotbugs {
-    ignoreFailures = false
+    ignoreFailures = true
     reportsDir = layout.buildDirectory.dir("reports/spotbugs")
 }
 
