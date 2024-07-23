@@ -14,6 +14,8 @@ plugins {
     id("org.flywaydb.flyway") version "10.15.2"
 
     id("org.openapi.generator") version "7.7.0"
+
+    id("com.github.spotbugs") version "6.0.19"
 }
 
 group = "lab.pguma.spb-dev-kit"
@@ -46,6 +48,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1")
 }
 
 kotlin {
