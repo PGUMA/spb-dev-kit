@@ -1,0 +1,45 @@
+name: Lint
+run-name: Lint(Run by @${{ github.actor }})
+
+on: push
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-by-spotbugs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up java
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "corretto"
+          cache: "gradle"
+      - name: Run Spotbugs Main
+        run: ./gradlew spotbugsMain
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      - name: Run reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat ./build/reports/spotbugs/main.sarif | \
+          reviewdog \
+            -f sarif \
+            -reporter=github-check \
+            -name spotbugs \
+            -level warning \
+            -filter-mode=nofilter
