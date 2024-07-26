@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
 
     id("org.flywaydb.flyway") version "10.15.2"
+    id("org.jooq.jooq-codegen-gradle") version "3.19.10"
 
     id("org.openapi.generator") version "7.7.0"
 
@@ -35,13 +36,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.flywaydb:flyway-core")
     runtimeOnly("org.flywaydb:flyway-database-postgresql:10.15.0")
 
+    jooqCodegen("org.postgresql:postgresql")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.resend:resend-java:3.1.0")
+
 
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
@@ -110,5 +115,34 @@ tasks.spotbugsMain {
     reports.create("html") {
         required = true
         setStylesheet("fancy-hist.xsl")
+    }
+}
+
+jooq {
+    configurations {
+        create("main") {
+            configuration {
+                jdbc {
+                    driver = "org.postgresql.Driver"
+                    url = "jdbc:postgresql://localhost:5432/dev"
+                    user = "postgres"
+                    password = "password"
+                }
+                generator {
+                    database {
+                        inputSchema = "public"
+                        excludes = "flyway_schema_history"
+                    }
+                    generate {
+                        isDeprecated = false
+                        isTables = true
+                    }
+                    target {
+                        packageName = "lab.pguma.spb-dev-kit.spb_dev_kit.infra.jooq"
+                        directory = layout.buildDirectory.dir("generated/src/main/jooq").get().asFile.path
+                    }
+                }
+            }
+        }
     }
 }
