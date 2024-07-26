@@ -1,4 +1,4 @@
-package lab.pguma.spb_dev_kit.spb_dev_kit.infra.notification
+package lab.pguma.spb_dev_kit.infra.notification
 
 import org.springframework.stereotype.Component
 

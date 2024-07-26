@@ -1,6 +1,6 @@
-package lab.pguma.spb_dev_kit.spb_dev_kit.quick
+package lab.pguma.spb_dev_kit.quick
 
-import lab.pguma.spb_dev_kit.spb_dev_kit.infra.notification.Notificator
+import lab.pguma.spb_dev_kit.infra.notification.Notificator
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

@@ -1,4 +1,4 @@
-package lab.pguma.spb_dev_kit.spb_dev_kit.config
+package lab.pguma.spb_dev_kit.config
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
 import org.springframework.context.annotation.Bean

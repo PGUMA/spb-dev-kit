@@ -1,4 +1,4 @@
-package lab.pguma.spb_dev_kit.spb_dev_kit
+package lab.pguma.spb_dev_kit
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
