@@ -3,6 +3,11 @@ spring:
     active: local
   application:
     name: spb-dev-kit
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/dev}
+    username: ${DATASOURCE_USER:postgres}
+    password: ${DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgres.Driver
   flyway:
     url: ${FLYWAY_DATASOURCE_URL:jdbc:postgresql://localhost:5432/dev}
     user: ${FLYWAY_USER:postgres}
