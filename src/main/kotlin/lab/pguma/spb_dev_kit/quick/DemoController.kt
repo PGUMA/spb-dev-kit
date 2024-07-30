@@ -1,11 +1,11 @@
 package lab.pguma.spb_dev_kit.quick
 
 import lab.pguma.spb_dev_kit.infra.notification.Notificator
-import org.slf4j.LoggerFactory
+import lab.pguma.spb_dev_kit.infra.repository.Demo
+import lab.pguma.spb_dev_kit.quick.port.validation.DemoValid
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class DemoController(
@@ -14,6 +14,13 @@ class DemoController(
     private val to: String,
     private val demoUseCase: DemoUseCase
 ) {
+    @GetMapping("/get")
+    fun getMethod(): GetBody = GetBody("get")
+
+    @PostMapping("/post")
+    fun postMethod(@Validated @RequestBody payload: Payload): String {
+        return "Post OK"
+    }
 
     @GetMapping("/hello")
     fun hello(): String = "Hello Spring Boot"
@@ -26,13 +33,20 @@ class DemoController(
 
     @GetMapping("/db")
     @ResponseBody
-    fun dbAccess(): String {
-        val result = demoUseCase.get()
-        logger.info(result.toString())
-        return result.toString()
+    fun dbAccess(): Demo {
+        return demoUseCase.get()
     }
 
-    companion object {
-        val logger = LoggerFactory.getLogger(DemoController::class.java)
-    }
 }
+
+data class GetBody(
+    val value: String
+)
+
+data class Payload(
+    @DemoValid("field1")
+    val field1: String,
+
+    @DemoValid("field2")
+    val field2: String
+)
