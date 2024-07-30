@@ -21,12 +21,20 @@ class SecurityConfig {
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+
+        // NOTE:セキュリティ的にはNGな実装です
+        // https://spring.pleiades.io/spring-security/reference/servlet/exploits/csrf.html#disable-csrf
+        http.csrf { csrf ->
+            csrf.disable() // Spring Securityを導入するとデフォルトで有効化されるため検証が手間になるので無効化
+        }
+
         http
             .authorizeHttpRequests { authorizeRequests ->
                 authorizeRequests
                     .requestMatchers(EndpointRequest.toAnyEndpoint())
                     .authenticated()
                     .anyRequest().permitAll()
+
             }
             .httpBasic(withDefaults())
 
